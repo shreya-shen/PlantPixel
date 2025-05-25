@@ -29,9 +29,6 @@ def preprocess_image(img, size=(300, 300)):
     # Gaussian blur to reduce noise
     blurred = cv2.GaussianBlur(img_resized, (5, 5), 0)
 
-    # Convert to HSV
-    hsv = cv2.cvtColor(blurred, cv2.COLOR_BGR2HSV)
-
     # Create a green mask (to isolate plant)
     lower_green, upper_green = get_dynamic_green_bounds(img_resized)
 
