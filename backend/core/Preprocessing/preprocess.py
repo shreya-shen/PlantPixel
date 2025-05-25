@@ -5,7 +5,7 @@ import requests
 import os
 from io import BytesIO
 from PIL import Image
-from backend.core.Preprocessing.dynamicThresholding import get_dynamic_green_bounds
+from .dynamicThresholding import get_dynamic_green_bounds
 
 
 def url_to_cv2_image(url):

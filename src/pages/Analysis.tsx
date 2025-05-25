@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { Leaf, Circle, Square, Heart, Sun } from 'lucide-react';
 import { toast } from 'sonner';
 import ImageUpload from '@/components/ImageUpload';
 import MetricsDisplay from '@/components/MetricsDisplay';
@@ -78,7 +78,7 @@ const Analysis = () => {
         value: metrics.leafCount.value,
         previousValue: metrics.leafCount.previousValue,
         unit: metrics.leafCount.unit,
-        icon: require('lucide-react').Leaf,
+        icon: Leaf,
         color: 'bg-plant-500',
         description: metrics.leafCount.description
       },
@@ -87,7 +87,7 @@ const Analysis = () => {
         value: metrics.greenPixelRatio.value,
         previousValue: metrics.greenPixelRatio.previousValue,
         unit: metrics.greenPixelRatio.unit,
-        icon: require('lucide-react').Circle,
+        icon: Circle,
         color: 'bg-green-500',
         description: metrics.greenPixelRatio.description
       },
@@ -96,7 +96,7 @@ const Analysis = () => {
         value: metrics.boundingBoxArea.value,
         previousValue: metrics.boundingBoxArea.previousValue,
         unit: metrics.boundingBoxArea.unit,
-        icon: require('lucide-react').Square,
+        icon: Square,
         color: 'bg-blue-500',
         description: metrics.boundingBoxArea.description
       },
@@ -105,7 +105,7 @@ const Analysis = () => {
         value: metrics.colorHealthIndex.value,
         previousValue: metrics.colorHealthIndex.previousValue,
         unit: metrics.colorHealthIndex.unit,
-        icon: require('lucide-react').Heart,
+        icon: Heart,
         color: 'bg-red-500',
         description: metrics.colorHealthIndex.description
       },
@@ -114,7 +114,7 @@ const Analysis = () => {
         value: metrics.sunlightProxy.value,
         previousValue: metrics.sunlightProxy.previousValue,
         unit: metrics.sunlightProxy.unit,
-        icon: require('lucide-react').Sun,
+        icon: Sun,
         color: 'bg-yellow-500',
         description: metrics.sunlightProxy.description
       }

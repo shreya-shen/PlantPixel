@@ -13,7 +13,7 @@ from services.growth_analysis import compare_and_score_growth, extract_metrics
 from core.Preprocessing.preprocess import url_to_cv2_image, preprocess_image
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend integration
+CORS(app, origins="http://localhost:8080", supports_credentials=True)  # Enable CORS for frontend integration
 
 # Configuration
 app.config['UPLOAD_FOLDER'] = 'uploads'

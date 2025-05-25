@@ -1,7 +1,7 @@
 
 import cv2
 import numpy as np
-from backend.core.Preprocessing.dynamicThresholding import get_dynamic_green_bounds
+from core.Preprocessing.dynamicThresholding import get_dynamic_green_bounds
 
 def calculate_bounding_box_area(mask):
     """
