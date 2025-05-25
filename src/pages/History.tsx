@@ -1,275 +1,158 @@
 
-import React, { useState } from 'react';
-import { Calendar, Leaf, TrendingUp, Search, Filter, MoreHorizontal, Eye, Download, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Calendar, TrendingUp, TrendingDown, Eye } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface AnalysisRecord {
-  id: string;
-  date: string;
-  plantName: string;
-  growthScore: number;
-  leafCount: number;
-  beforeImage: string;
-  afterImage: string;
-  status: 'completed' | 'processing' | 'failed';
+  analysis_id: string;
+  growth_score: number;
+  timestamp: string;
+  suggestion: string;
+  metrics: any;
 }
 
 const History = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'date' | 'score' | 'name'>('date');
+  const [analyses, setAnalyses] = useState<AnalysisRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedAnalysis, setSelectedAnalysis] = useState<AnalysisRecord | null>(null);
 
-  // Mock data
-  const analysisHistory: AnalysisRecord[] = [
-    {
-      id: '1',
-      date: '2024-02-01',
-      plantName: 'Monstera Deliciosa',
-      growthScore: 78.5,
-      leafCount: 24,
-      beforeImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=300&fit=crop',
-      afterImage: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop',
-      status: 'completed'
-    },
-    {
-      id: '2',
-      date: '2024-01-15',
-      plantName: 'Fiddle Leaf Fig',
-      growthScore: 85.2,
-      leafCount: 18,
-      beforeImage: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?w=400&h=300&fit=crop',
-      afterImage: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop',
-      status: 'completed'
-    },
-    {
-      id: '3',
-      date: '2024-01-01',
-      plantName: 'Peace Lily',
-      growthScore: 72.1,
-      leafCount: 15,
-      beforeImage: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843?w=400&h=300&fit=crop',
-      afterImage: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop',
-      status: 'completed'
-    },
-  ];
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'bg-plant-100 text-plant-700';
-    if (score >= 60) return 'bg-earth-100 text-earth-700';
-    return 'bg-red-100 text-red-700';
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <Badge className="bg-plant-100 text-plant-700">Completed</Badge>;
-      case 'processing':
-        return <Badge className="bg-earth-100 text-earth-700">Processing</Badge>;
-      case 'failed':
-        return <Badge variant="destructive">Failed</Badge>;
-      default:
-        return null;
+  const fetchHistory = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/history');
+      if (response.ok) {
+        const data = await response.json();
+        setAnalyses(data.analyses || []);
+      } else {
+        toast.error('Failed to fetch analysis history');
+      }
+    } catch (error) {
+      toast.error('Error connecting to server');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const filteredHistory = analysisHistory.filter(record =>
-    record.plantName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const getScoreColor = (score: number) => {
+    if (score >= 80) return 'text-green-600';
+    if (score >= 60) return 'text-yellow-600';
+    return 'text-red-600';
+  };
+
+  const getScoreBadge = (score: number) => {
+    if (score >= 80) return 'bg-green-100 text-green-800';
+    if (score >= 60) return 'bg-yellow-100 text-yellow-800';
+    return 'bg-red-100 text-red-800';
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-plant-500"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-2xl p-8 shadow-lg">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold bg-plant-gradient bg-clip-text text-transparent mb-2">
-              Analysis History
-            </h1>
-            <p className="text-gray-600">Track your plant growth journey over time</p>
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <Input
-                placeholder="Search plants..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-64"
-              />
-            </div>
-            <Button variant="outline" size="icon">
-              <Filter className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold bg-plant-gradient bg-clip-text text-transparent mb-4">
+          Analysis History
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Review your previous plant growth analyses and track progress over time.
+        </p>
       </div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Total Analyses</CardTitle>
-            <Calendar className="h-4 w-4 text-plant-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-800">{analysisHistory.length}</div>
-            <p className="text-xs text-gray-500 mt-1">Completed this month</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Average Score</CardTitle>
-            <TrendingUp className="h-4 w-4 text-plant-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-800">
-              {(analysisHistory.reduce((acc, record) => acc + record.growthScore, 0) / analysisHistory.length).toFixed(1)}
+      {analyses.length === 0 ? (
+        <Card className="mx-auto max-w-2xl">
+          <CardContent className="pt-6">
+            <div className="text-center space-y-4">
+              <Calendar className="w-16 h-16 text-gray-400 mx-auto" />
+              <h3 className="text-xl font-semibold text-gray-600">No Analysis History</h3>
+              <p className="text-gray-500">
+                You haven't performed any plant growth analyses yet. Start by uploading some images!
+              </p>
+              <Button className="bg-plant-gradient hover:opacity-90">
+                Start First Analysis
+              </Button>
             </div>
-            <p className="text-xs text-plant-600 mt-1">+12% from last month</p>
           </CardContent>
         </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Plants Tracked</CardTitle>
-            <Leaf className="h-4 w-4 text-plant-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-800">
-              {new Set(analysisHistory.map(record => record.plantName)).size}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">Unique plants</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Analysis Records */}
-      <div className="space-y-4">
-        {filteredHistory.map((record) => (
-          <Card key={record.id} className="hover:shadow-lg transition-all duration-200">
-            <CardContent className="p-6">
-              <div className="flex flex-col lg:flex-row lg:items-center gap-6">
-                {/* Images */}
-                <div className="flex space-x-3">
-                  <div className="relative">
-                    <img
-                      src={record.beforeImage}
-                      alt="Before"
-                      className="w-24 h-24 object-cover rounded-lg border-2 border-gray-200"
-                    />
-                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
-                      Before
+      ) : (
+        <div className="grid gap-6">
+          {analyses.map((analysis) => (
+            <Card key={analysis.analysis_id} className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="flex items-center space-x-3">
+                      <span>Growth Analysis</span>
+                      <Badge className={getScoreBadge(analysis.growth_score)}>
+                        Score: {analysis.growth_score.toFixed(1)}
+                      </Badge>
+                    </CardTitle>
+                    <div className="flex items-center space-x-2 text-sm text-gray-500 mt-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{new Date(analysis.timestamp).toLocaleString()}</span>
                     </div>
                   </div>
-                  <div className="flex items-center">
-                    <TrendingUp className="w-6 h-6 text-plant-500" />
-                  </div>
-                  <div className="relative">
-                    <img
-                      src={record.afterImage}
-                      alt="After"
-                      className="w-24 h-24 object-cover rounded-lg border-2 border-plant-200"
-                    />
-                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-plant-700 text-white text-xs px-2 py-1 rounded">
-                      After
+                  <div className="text-right">
+                    <div className={`text-3xl font-bold ${getScoreColor(analysis.growth_score)}`}>
+                      {analysis.growth_score.toFixed(1)}
                     </div>
+                    <div className="text-sm text-gray-500">Growth Score</div>
                   </div>
                 </div>
-
-                {/* Details */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-1">
-                        {record.plantName}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-2">
-                        Analyzed on {new Date(record.date).toLocaleDateString()}
-                      </p>
-                      <div className="flex items-center space-x-4 text-sm">
-                        <div className="flex items-center space-x-1">
-                          <Leaf className="w-4 h-4 text-plant-500" />
-                          <span>{record.leafCount} leaves</span>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-gray-700">{analysis.suggestion}</p>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    {Object.entries(analysis.metrics).map(([key, metric]: [string, any]) => {
+                      const change = metric.previousValue > 0 
+                        ? ((metric.value - metric.previousValue) / metric.previousValue) * 100 
+                        : 0;
+                      const isPositive = change > 0;
+                      
+                      return (
+                        <div key={key} className="text-center">
+                          <div className="text-sm font-medium text-gray-600 mb-1">
+                            {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                          </div>
+                          <div className="text-lg font-bold">{metric.value.toFixed(1)}</div>
+                          <div className={`flex items-center justify-center text-xs ${
+                            isPositive ? 'text-green-600' : 'text-red-500'
+                          }`}>
+                            {isPositive ? <TrendingUp className="w-3 h-3 mr-1" /> : <TrendingDown className="w-3 h-3 mr-1" />}
+                            {Math.abs(change).toFixed(1)}%
+                          </div>
                         </div>
-                        <Badge className={getScoreColor(record.growthScore)}>
-                          Score: {record.growthScore.toFixed(1)}
-                        </Badge>
-                        {getStatusBadge(record.status)}
-                      </div>
-                    </div>
+                      );
+                    })}
+                  </div>
 
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Download className="w-4 h-4 mr-2" />
-                          Download Report
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-red-600">
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  <div className="flex justify-end">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setSelectedAnalysis(analysis)}
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      View Details
+                    </Button>
                   </div>
                 </div>
-
-                {/* Score Circle */}
-                <div className="flex-shrink-0">
-                  <div className="w-20 h-20 relative">
-                    <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="35"
-                        stroke="currentColor"
-                        strokeWidth="6"
-                        fill="transparent"
-                        className="text-gray-200"
-                      />
-                      <circle
-                        cx="50"
-                        cy="50"
-                        r="35"
-                        stroke="currentColor"
-                        strokeWidth="6"
-                        fill="transparent"
-                        strokeDasharray={`${(record.growthScore / 100) * 219.8} 219.8`}
-                        className={record.growthScore >= 80 ? 'text-plant-500' : record.growthScore >= 60 ? 'text-earth-500' : 'text-red-500'}
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className={`text-lg font-bold ${record.growthScore >= 80 ? 'text-plant-600' : record.growthScore >= 60 ? 'text-earth-600' : 'text-red-600'}`}>
-                        {Math.round(record.growthScore)}
-                      </span>
-                      <span className="text-xs text-gray-500">score</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredHistory.length === 0 && (
-        <div className="text-center py-12">
-          <Leaf className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-600 mb-2">No analyses found</h3>
-          <p className="text-gray-500">Start analyzing your plants to see their growth history here.</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       )}
     </div>

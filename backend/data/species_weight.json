@@ -1,0 +1,31 @@
+
+{
+  "default": {
+    "bounding_box_area": 0.25,
+    "green_pixel_ratio": 0.25,
+    "leaf_count": 0.20,
+    "color_health_index": 0.20,
+    "sunlight_proxy": 0.10
+  },
+  "tomato": {
+    "bounding_box_area": 0.30,
+    "green_pixel_ratio": 0.25,
+    "leaf_count": 0.20,
+    "color_health_index": 0.15,
+    "sunlight_proxy": 0.10
+  },
+  "lettuce": {
+    "bounding_box_area": 0.20,
+    "green_pixel_ratio": 0.30,
+    "leaf_count": 0.25,
+    "color_health_index": 0.15,
+    "sunlight_proxy": 0.10
+  },
+  "basil": {
+    "bounding_box_area": 0.25,
+    "green_pixel_ratio": 0.25,
+    "leaf_count": 0.25,
+    "color_health_index": 0.15,
+    "sunlight_proxy": 0.10
+  }
+}
