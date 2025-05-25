@@ -28,9 +28,9 @@ const Layout = ({ children }: LayoutProps) => {
               </div>
               <div>
                 <h1 className="text-xl font-bold bg-plant-gradient bg-clip-text text-transparent">
-                  PlantGrow AI
+                  Plant Pixel
                 </h1>
-                <p className="text-xs text-gray-600">Growth Analysis Platform</p>
+                <p className="text-xs text-gray-600">Plant Growth Analysis Platform</p>
               </div>
             </div>
 
