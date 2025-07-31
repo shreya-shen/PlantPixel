@@ -9,6 +9,7 @@ from utils.comparison_metrics import (
     calculate_color_health_index,
     estimate_sunlight_proxy
 )
+from utils.performance_monitor import performance_monitor
 
 # Standardized weights used for *all* plants
 STANDARD_WEIGHTS = {
@@ -19,6 +20,7 @@ STANDARD_WEIGHTS = {
     "sunlight_proxy": 0.10
 }
 
+@performance_monitor.timing_decorator("image_preprocessing")
 def extract_metrics(image):
     """
     Extracts all growth metrics from a given OpenCV image.
@@ -64,6 +66,7 @@ def extract_metrics(image):
             "sunlight_proxy": 0.0
         }
 
+@performance_monitor.timing_decorator("growth_score_calculation")
 def compare_and_score_growth(before_metrics, after_metrics):
     """
     Compare growth metrics and generate a normalized growth score.
