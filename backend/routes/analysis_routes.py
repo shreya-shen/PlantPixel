@@ -13,6 +13,7 @@ from PIL import Image
 
 from services.growth_analysis import compare_and_score_growth, extract_metrics
 from core.Preprocessing.preprocess import preprocess_image
+from utils.performance_monitor import performance_monitor
 
 analysis_bp = Blueprint('analysis', __name__)
 
@@ -64,6 +65,7 @@ def upload_images():
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
 
 @analysis_bp.route('/analyze', methods=['POST'])
+@performance_monitor.timing_decorator("full_analysis_pipeline")
 def analyze_growth():
     """Analyze plant growth from uploaded images"""
     try:
