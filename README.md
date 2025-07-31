@@ -6,32 +6,32 @@
 [![TypeScript](https://img.shields.io/badge/Frontend-React%2FTS-blue)](./frontend/)
 [![Python](https://img.shields.io/badge/Backend-Flask%2FPython-blue)](./backend/)
 
-## 🚀 Overview
+## Overview
 
 PlantPixel is an advanced computer vision platform that revolutionizes plant growth monitoring through automated image analysis. The system processes comparative plant imagery to generate comprehensive growth metrics with **93.64% accuracy** in just **0.114 seconds**, enabling precision agriculture and data-driven plant care decisions.
 
 ## ⭐ Key Features
 
-### 🔬 Advanced Computer Vision Metrics
+### Advanced Computer Vision Metrics
 - **Watershed Segmentation**: Automated leaf counting with 87.83% accuracy
 - **HSV Color Analysis**: Plant health assessment with 97.30% accuracy  
 - **Dynamic Thresholding**: Adaptive plant isolation across lighting conditions
 - **Bounding Box Analysis**: Growth area calculation with 93.31% accuracy
 - **Sunlight Exposure Estimation**: Environmental condition assessment with 95.43% accuracy
 
-### ⚡ Performance Excellence
+### Performance Excellence
 - **Sub-second Processing**: 0.114s average analysis time
 - **Real-time Analysis**: 100% sub-3-second compliance
 - **Enterprise Reliability**: 91.28% system consistency
 - **Scalable Architecture**: Consistent performance across image sizes
 
-### 🎯 User Experience
+### User Experience
 - **Intuitive Interface**: React/TypeScript frontend with responsive design
 - **Drag & Drop Upload**: Simple before/after image comparison
 - **Interactive Charts**: Real-time growth visualization with Recharts
 - **Actionable Insights**: AI-generated care recommendations
 
-## 🏗️ Technical Architecture
+## Technical Architecture
 
 ### Frontend Stack
 ```
@@ -62,7 +62,7 @@ Base64 Upload → Gaussian Blur → HSV Conversion → Metrics → JSON Output
                 Noise Reduction  Segmentation    Weights   Recommendations
 ```
 
-## 📊 Verified Performance Metrics
+## Verified Performance Metrics
 
 ### Speed Benchmarks (150 test iterations)
 | Image Size | Average Time | Success Rate | Sub-3s Compliance |
@@ -85,7 +85,7 @@ Base64 Upload → Gaussian Blur → HSV Conversion → Metrics → JSON Output
 - **Coefficient of Variation**: 8.72%
 - **Target Achievement**: 3/3 benchmarks exceeded
 
-## � Project Structure
+## Project Structure
 
 ```
 plant-growth-voyager/
@@ -110,7 +110,7 @@ plant-growth-voyager/
 └── README.md                  # This file
 ```
 
-## �🛠️ Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 ```bash
@@ -158,7 +158,7 @@ STANDARD_WEIGHTS = {
 4. **Metric Calculation**: Weighted scoring with normalized outputs
 5. **Growth Analysis**: Comparative scoring with percentage change calculation
 
-## 📈 API Endpoints
+## API Endpoints
 
 ### Core Analysis
 ```http
@@ -181,7 +181,7 @@ Response: {
 }
 ```
 
-## 🏆 Industry Recognition
+## Industry Recognition
 
 ### Performance Benchmarks
 - ✅ **26× faster** than industry standard (0.114s vs 3s target)
@@ -190,10 +190,10 @@ Response: {
 - ✅ **Comprehensive analysis** (5 metrics vs typical 2-3)
 
 ### Technical Innovation
-- 🥇 **Advanced Watershed Segmentation** for leaf counting
-- 🥇 **Hybrid Sunlight Estimation** combining image + weather data
-- 🥇 **Dynamic Thresholding** for varying lighting conditions
-- 🥇 **Real-time Performance Monitoring** with automated benchmarking
+- **Advanced Watershed Segmentation** for leaf counting
+- **Hybrid Sunlight Estimation** combining image + weather data
+- **Dynamic Thresholding** for varying lighting conditions
+- **Real-time Performance Monitoring** with automated benchmarking
 
 ## 🔧 Development Tools
 
@@ -214,14 +214,14 @@ from utils.validation_system import run_comprehensive_validation
 run_comprehensive_validation()
 ```
 
-## 📚 Documentation
+##  Documentation
 
-- 📊 [Performance Analysis Report](./PERFORMANCE_ANALYSIS_REPORT.md)
-- 🔬 [Validation Dataset](./backend/validation_dataset.json)
-- 📈 [Performance Logs](./backend/performance_logs.json)
-- 🏗️ [Architecture Overview](./docs/architecture.md)
+- [Performance Analysis Report](./PERFORMANCE_ANALYSIS_REPORT.md)
+- [Validation Dataset](./backend/validation_dataset.json)
+- [Performance Logs](./backend/performance_logs.json)
+- [Architecture Overview](./docs/architecture.md)
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/enhancement`)
@@ -229,10 +229,6 @@ run_comprehensive_validation()
 4. Commit changes (`git commit -am 'Add new feature'`)
 5. Push to branch (`git push origin feature/enhancement`)
 6. Create Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
