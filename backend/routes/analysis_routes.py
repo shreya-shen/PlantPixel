@@ -64,14 +64,28 @@ def upload_images():
     except Exception as e:
         return jsonify({"error": f"Upload failed: {str(e)}"}), 500
 
-@analysis_bp.route('/analyze', methods=['POST'])
+@analysis_bp.route('/analyze', methods=['POST', 'OPTIONS'])
 @performance_monitor.timing_decorator("full_analysis_pipeline")
 def analyze_growth():
     """Analyze plant growth from uploaded images"""
+    print(f"Request method: {request.method}")
+    print(f"Request origin: {request.headers.get('Origin')}")
+    print(f"Request headers: {dict(request.headers)}")
+    
+    # Handle preflight OPTIONS request
+    if request.method == 'OPTIONS':
+        print("Handling OPTIONS request")
+        response = jsonify({'status': 'ok'})
+        print("OPTIONS response sent")
+        return response
+    
+    print("Processing POST request...")
     try:
         data = request.get_json()
+        print(f"Received data keys: {data.keys() if data else 'No data'}")
         
         if not data or 'beforeImage' not in data or 'afterImage' not in data:
+            print("Missing required image data")
             return jsonify({"error": "Both images are required for analysis"}), 400
         
         # Convert base64 images to OpenCV format
@@ -201,9 +215,13 @@ def get_metrics(analysis_id):
     else:
         return jsonify({"error": "Analysis not found"}), 404
 
-@analysis_bp.route('/history', methods=['GET'])
+@analysis_bp.route('/history', methods=['GET', 'OPTIONS'])
 def get_history():
     """Get all previous analyses"""
+    # Handle preflight OPTIONS request
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'})
+    
     history = list(analysis_results.values())
     # Sort by timestamp, newest first
     history.sort(key=lambda x: x['timestamp'], reverse=True)
