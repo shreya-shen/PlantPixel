@@ -84,30 +84,6 @@ Base64 Upload → Gaussian Blur → HSV Conversion → Metrics → JSON Output
 - **Overall Reliability**: 91.28%
 - **Coefficient of Variation**: 8.72%
 - **Target Achievement**: 3/3 benchmarks exceeded
-
-## Project Structure
-
-```
-plant-growth-voyager/
-├── frontend/                   # React/TypeScript frontend
-│   ├── src/                   # Source code
-│   ├── public/                # Static assets
-│   ├── package.json           # Frontend dependencies
-│   └── README.md              # Frontend documentation
-├── backend/                   # Flask/Python backend
-│   ├── core/                  # Computer vision algorithms
-│   ├── services/              # Business logic
-│   ├── routes/                # API endpoints
-│   ├── utils/                 # Utility functions
-│   ├── app.py                 # Main Flask application
-│   └── requirements.txt       # Backend dependencies
-├── tests/                     # Testing suite
-│   ├── test_images/           # Real plant test images
-│   ├── run_benchmarks.py      # Performance benchmarking
-│   ├── test_performance.py    # Performance testing
-│   └── README.md              # Testing documentation
-├── COMPREHENSIVE_ACCURACY_PERFORMANCE_REPORT.md # Main performance report
-└── README.md                  # This file
 ```
 
 ## Installation & Setup
@@ -138,7 +114,7 @@ cd tests
 python run_benchmarks.py
 ```
 
-## 🔬 Algorithm Details
+## Algorithm Details
 
 ### Weighted Metric System
 ```python
@@ -157,43 +133,7 @@ STANDARD_WEIGHTS = {
 3. **Feature Extraction**: Contour detection + morphological operations
 4. **Metric Calculation**: Weighted scoring with normalized outputs
 5. **Growth Analysis**: Comparative scoring with percentage change calculation
-
-## API Endpoints
-
-### Core Analysis
-```http
-POST /api/analyze
-Content-Type: application/json
-
-{
-  "beforeImage": "data:image/jpeg;base64,...",
-  "afterImage": "data:image/jpeg;base64,..."
-}
-```
-
-### Performance Monitoring
-```http
-GET /api/performance
-Response: {
-  "average_time": 0.114,
-  "accuracy": 93.64,
-  "reliability": 91.28
-}
-```
-
-## Industry Recognition
-
-### Performance Benchmarks
-- ✅ **26× faster** than industry standard (0.114s vs 3s target)
-- ✅ **8-12% higher accuracy** than typical agricultural CV systems
-- ✅ **Enterprise-grade reliability** (>90% consistency threshold)
-- ✅ **Comprehensive analysis** (5 metrics vs typical 2-3)
-
-### Technical Innovation
-- **Advanced Watershed Segmentation** for leaf counting
-- **Hybrid Sunlight Estimation** combining image + weather data
-- **Dynamic Thresholding** for varying lighting conditions
-- **Real-time Performance Monitoring** with automated benchmarking
+   
 
 ## 🔧 Development Tools
 
@@ -235,8 +175,4 @@ run_comprehensive_validation()
 **Shreya Shen**
 - GitHub: [@shreya-shen](https://github.com/shreya-shen)
 - Project: [PlantPixel](https://github.com/shreya-shen/PlantPixel)
-
----
-
-**Built with** ❤️ **using React, TypeScript, Flask, and OpenCV**  
-**Performance verified** ✅ **through comprehensive automated testing**
+- Email: [For queries, reach out to](mailto:shreya.shenoy01@gmail.com)
