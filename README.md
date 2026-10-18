@@ -175,4 +175,4 @@ run_comprehensive_validation()
 **Shreya Shen**
 - GitHub: [@shreya-shen](https://github.com/shreya-shen)
 - Project: [PlantPixel](https://github.com/shreya-shen/PlantPixel)
-- Email: [](mailto:shreya.shenoy01@gmail.com)
+- Email: [shreya.shenoy01@gmail.com](mailto:shreya.shenoy01@gmail.com)
